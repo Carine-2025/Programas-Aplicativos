@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" />
+    <title>Troca-cor</title>
+  </head>
+
+  <body>
+    <h1>Escolha uma cor</h1>
+    <!--onclick executa um código quando o botão é clicado,
+    aqui, ao clicar, a função trocar será chamada enviando ('a cor')
+    como parâmetro-->
+    <button onclick="trocar('red')">Vermelho</button>
+    <button onclick="trocar('green')">Verde</button>
+    <button onclick="trocar('blue')">Azul</button>
+    <button onclick="trocar('white')">Resetar</button>
+
+    <script>
+       // a função recebe a variável/parâmetro 'cor',
+       //que recebe atribuição no onclick.
+      function trocar(cor) {
+        //documento representa toda a página HTML;
+        //body seleciona o body;
+        //style acessa os estilos CSS do elemento;
+        //background altera o fundo;
+        //= cor usa a cor recebida pela função.
+        //onclick="trocar('red')" equivale a 
+        //document.body.style.background = 'red';
+        document.body.style.background = cor;
+      }
+    </script>
+  </body>
+</html>

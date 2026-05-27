@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viweport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ</title>
+</head>
+
+<body>
+    <div class="pergunta" style="background-color: rgb(230, 227, 227); border-radius: 8px">
+        <h3 onclick="exibir('resposta1')">O que é HTML?</h3>
+        <p id="resposta1" style="display:none;">
+            HTML é uma linguagem de marcação, usada para estruturar
+            aplicações web.
+        </p>
+    </div>
+    <div class="pergunta" style="background-color: rgb(230, 227, 227); border-radius: 8px">
+        <h3 onclick="exibir('resposta2')">O que é CSS?</h3>
+        <p id="resposta2" style="display:none;">
+            CSS é uma linguagem de estilização, usada para personalizar
+            elementos HTML adicionando cores, formas, bordas etc.
+        </p>
+    </div>
+    <div class="pergunta" style="background-color: rgb(230, 227, 227); border-radius: 8px">
+        <h3 onclick="exibir('resposta3')">O que é JavaScript?</h3>
+        <p id="resposta3" style="display:none;">
+            JavaScript é uma linguagem lógica, usada para programar
+            as ações que serão executadas pelo sistema.
+        </p>
+    </div>
+
+    <script>
+        function exibir(id) {
+            const resposta = document.getElementById(id);
+
+            if (resposta.style.display == "none") {
+                resposta.style.display = " block";
+            } else {
+                resposta.style.display = "none";
+            }
+        }
+    </script>
+</body>
+
+</html>

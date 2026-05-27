@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora de IMC</title>
+  </head>
+
+  <body>  
+      <h1 style="font-size: 50px; margin-bottom: 25px">Calculadora de IMC</h1>
+      <p style="font-size: 20px; margin-bottom: 25px">
+        Informe seu peso e sua altura para calcular seu índice de massa
+        muscular:
+      </p>      
+        <input id="peso" type="number" placeholder="Qual é seu peso? Ex. 74" />
+        <input id="altura" type="number" placeholder="Qual é sua altura? Ex. 1,65" />
+        <button onclick="calcular()">Calcular</button>      
+      <div id="card_resultado" class="card_resultado" style="display: none">
+        <h3 id="peso_altura" style="font-size: 25px"></h3>
+        <h3 id="resultado" style="font-size: 30px"></h3>
+        <h3 id="feedback" style="font-size: 30px"></h3>
+      </div>
+   
+
+    <script>
+      function calcular() {
+        const peso = parseFloat(document.getElementById("peso").value);
+        const altura = parseFloat(document.getElementById("altura").value);
+
+        if (!peso || !altura) {
+          alert("Preencha peso e altura!");
+          return;
+        }
+
+        const imc = peso / (altura * altura);
+
+        const feedback = document.getElementById("feedback");
+
+        document.getElementById("card_resultado").style.display = "block";
+        document.getElementById("peso_altura").innerText =
+          `Peso: ${peso}kg  Altura: ${altura}m`;
+        document.getElementById("resultado").innerText =
+          `IMC ${imc.toFixed(2)}`;
+
+        document.getElementById("peso").value = "";
+        document.getElementById("altura").value = "";
+
+        if (imc < 18.5) {
+          feedback.innerText = "Abaixo do peso";
+          feedback.style.color = "#687CFF";
+        } else if (imc >= 18.5 && imc <= 24.9) {
+          feedback.innerText = "Normal";
+          feedback.style.color = "#069A0B";
+        } else if (imc >= 25 && imc <= 29.9) {
+          feedback.innerText = "Sobrepeso";
+          feedback.style.color = "#EEBF05";
+        } else {
+          feedback.innerText = "Obesidade";
+          feedback.style.color = "#BA3808";
+        }
+      }
+    </script>
+
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        font-family: monospace;
+        margin: 0px;
+        height: 100vh;
+      }
+     
+      input {
+        width: 400px;
+        height: 50px;
+        margin-bottom: 25px;
+        font-size: 20px;
+        padding: 8px;
+        border-radius: 10px;
+      }
+
+      button {
+        width: 180px;
+        height: 45px;
+        font-size: 20px;
+        margin-bottom: 25px;
+        background-color: black;
+        border-radius: 8px;
+        color: white;
+      }
+
+      .card_resultado {
+        width: 450px;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(77, 78, 78, 0.2);
+      }
+      
+    </style>
+  </body>
+</html>

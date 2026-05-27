@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport">
+    <title>Saudação</title>
+</head>
+
+<body>
+    <input id="nome" type="text" placeholder="Digite seu nome">
+    <button onclick="saudar()">Saudar</button>
+    <p id="saudacao"></p>
+</body>
+
+<script>
+    function saudar() {
+        let nome = document.getElementById("nome").value;
+
+        document.getElementById("saudacao").innerText =
+            "Olá," + nome + "! Bem vindo!";
+    }
+</script>
+
+</html>

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Botões</title>
+</head>
+
+<body>
+    <button id="botao1">botão 1</button>
+    <button id="botao2">botão 2</button>
+    <button id="botao3">botão 3</button>
+    <button id="botao4">botão 4</button>
+</body>
+
+<style>
+    #botao1 {
+        background-color: blue;
+        color: white;
+        border-radius: 8px;
+        transition: 0.03s;
+        padding: 10px;
+        border: none;
+    }
+
+    #botao2 {
+        background-color: transparent;
+        color: green;
+        border: 2px solid green;
+        transition: 0.03s;
+        padding: 10px;
+    }
+
+    #botao3 {
+        background-color: red;
+        color: white;
+        border-radius: 50px;
+        transition: 0.03s;
+        padding: 10px;
+        border: none;
+    }
+
+    #botao4 {
+        background-color: black;
+        color: yellow;
+        text-transform: uppercase;
+        transition: 0.03s;
+        padding: 10px;
+        border: none;
+    }
+
+    #botao1:hover,
+    #botao2:hover,
+    #botao3:hover,
+    #botao4:hover {
+        background-color: gray;
+    }
+    #botao1:active,
+    #botao2:active,
+    #botao3:active,
+    #botao4:active {
+        transform: scale(0,1);
+    }
+</style>
+
+</html>

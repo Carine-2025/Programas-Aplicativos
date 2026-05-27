@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista de Tarefas</title>
+  </head>
+
+  <body>
+    <div>
+      <input id="tarefa" type="text" placeholder="Tarefa" />
+      <button onclick="adicionar()">Adicionar</button>
+      <ul id="tarefas"></ul>
+    </div>
+
+    <script>
+    //  function adicionar() {
+
+    //      const nova_tarefa = document.getElementById("tarefa").value;
+//
+    //      if (nova_tarefa.trim() == ""){//trim desconsidera espaços vazios no começo e no final, assim se o usuário digitar espaço no input também será considerado vazio.
+    //          alert("Digite uma tarefa!")//abre uma pop-up com a mensagem de alerta
+    //      }else { 
+    //          const li = document.createElement("li"); //cria uma linha 
+//
+    //          li.innerText = nova_tarefa; //adiciona o texto da nova tarefa na linha criada
+    //         document.getElementById("tarefas").appendChild(li); //anexa a nova linha à coluna
+    //         document.getElementById("tarefa").value = ""; //limpa o input após adicionar uma nova tarefa
+    //      }
+    //  }
+
+     let lista = [];
+
+        function adicionar() {
+
+            const nova_tarefa =
+                document.getElementById("tarefa").value;
+
+            if (nova_tarefa.trim() == "") {
+
+                alert("Digite uma tarefa!");
+
+                return;
+            }
+
+            lista.push(nova_tarefa);
+
+            mostrarTarefas();
+
+            document.getElementById("tarefa").value = "";
+
+        }
+
+        function mostrarTarefas() {
+
+            let html = "";
+
+            for (let i = 0; i < lista.length; i++) {
+
+                html += "<li>" + lista[i] + "</li>";
+
+            }
+
+            document.getElementById("tarefas").innerHTML = html;
+
+        }
+    </script>
+  </body>
+</html>

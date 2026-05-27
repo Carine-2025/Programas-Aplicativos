@@ -1,0 +1,123 @@
+<!--Informa ao navegador que a página usa HTML5. É como se dissesse “renderize esta página no modo padrão moderno”.-->
+<!DOCTYPE html>
+<!--Tag raiz do HTML, onde todo o HTML deve ficar. Lang indica o idioma da página.-->
+<html lang="pt-BR">
+
+<!--Contém informações como título, configurações, links para CSS, scripts, metadados. Geralmente não aparecem no conteúdo visível da página.-->
+
+<head>
+    <!--Define o conjunto de caracteres usados. UTF-8 suporta acentos, cedilha, símbolos e vários idiomas.-->
+    <meta charset="UTF-8">
+    <!--Configura responsividade. width=device-width faz largura da página acompanhar a largura da tela. initial-scale=1.0 define o nível inicial de zoom como 100%-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--O título da página aparece na aba do navegador, nos favoritos, em resultados de busca-->
+    <title>Loja de Calçados</title>
+</head>
+
+<!--Conteúdo vísivel da página.-->
+
+<body>
+
+    <!--Cabeçalho da página ou de uma seção. Geralmente contém logo, título, menu, navegação.-->
+    <header>
+        <!--Nível mais importante de título. Ajuda na organização do conteúdo, acessibilidade, SEO.-->
+        <h1>Loja de Calçados</h1>
+    </header>
+
+    <!--Conteúdo principal da página.-->
+    <main>
+        <!--Container que agrupa elementos criando uma classe usada para estilização CSS, também pode ser usada no JS.
+        Neste caso, esse bloco foi criado para limitar o tamanho de main e centralizar os elementos mantedo-os à esquerda. -->
+        <div class="produto">
+
+            <!--src é o caminho da imagem, pode ser URL ou arquivo local. Width define a largura da imagem em pixels. Alt é a descrição da imagem, aparece se a imagem não carregar, ajuda leitores de tela e melhora acessibilidade -->
+            <img src="https://scarpan.com.br/wp-content/uploads/2022/07/8f5aa7d69b7956ddd6e8ba5f78cf2f76.jpg"
+                width="300" alt="Coturno feminino de couro">
+            <!--Título secundário.-->
+            <h2>Coturno feminino</h2>
+            <!--p cria parágrafo. class define uma classe CSS, serve para estilizar e identificar elementos no JS.-->
+            <p class="descricao">Bota de couro coturno feminino salto médio</p>
+            <p class="valor">R$149,99</p>
+            <!--Cria um botão clicável.-->
+            <button>COMPRAR</button>
+        </div>
+    </main>
+
+    <!--Cria um rodapé, onde geralmente contém direitos autorais, contatos, links, informações institucionais.-->
+    <footer>
+        <p>@ 2026 Minha Loja</p>
+    </footer>
+
+</body>
+
+<!--Inicia bloco CSS, define estilos da página.-->
+<style>
+    /*Os estilos dentro das chaves se aplicam ao corpó da página*/
+    body {
+        /*Ativa Flexbox: organiza os elementos do body de forma flexível. Se aplica aos filhos diretos do body (header, main, footer), mas não se aplica aos elementos dentro dessas tags*/
+        display: flex;
+        /*Organiza os elementos em coluna, ficam um abaixo do outro*/
+        flex-direction: column;
+        /*Define a altura mínima da página 100% da altura da tela. Isso ajuda a manter o footer no final da tela.*/
+        min-height: 100vh;
+        /*Remove margens externas padão do navegador, evita espaços brancos nas bordas da página*/
+        margin: 0px;
+        /*Define a fonte do texto da página toda*/
+        font-family: arial;
+    }
+
+
+    /*Aplica estilo na tag header*/
+    header {
+        /*Centraliza o texto horizontalmente*/
+        text-align: center;
+        /*Aplica cor de fundo*/
+        background: black;
+        /*Aplica cor ao texto*/
+        color: white;
+    }
+
+    /*Aplica estilo na tag main*/
+    main {
+        /*Faz o main ocupar o espaço restante da tela, ajuda a manter o footer no fim da página. Muito usado junto com min-heigth: 100vh*/
+        flex: 1;
+        /*Espaçamento interno em todos os lados*/
+        padding: 18px;    
+    }
+
+    /*Seleciona qualquer elemento da classe produto*/
+    .produto {
+        /*Define a largura fixa da classe para a mesma da imagem, assim todos os elementos ficam contidos nessa largura, possibilitando centraliza-los com a imagem*/
+        width: 300px;
+        text-align: center;
+    } 
+
+    .valor {
+        color: red;
+        font-size: 30px;
+    }
+
+    .produto button {
+        color: white;
+        background: green;
+        /*Texto em negrito, 700 equivale aproximadamente a bold*/
+        font-weight: 700;
+        /*Espaçamento interno do botão. Mantém o tamanho do texto e aumenta o tamanho da caixa para aplicar a distância. Ao usar width e height o padding deve ser considerado no valor total;*/
+        padding: 10px;
+        /*Transforma o botão em bloco*/
+        display: block;
+        /*divide as margens igualmente, centralizando o botão dentro de .produto*/
+        margin: 0 auto;
+    }
+
+    footer {
+        font-size: 16px;
+        color: white;
+        text-align: center;
+        /*Espaçamento interno com espaço definido em cima e embaixo (40px) e 0 nas laterais*/
+        padding: 40px 0;
+        background: black;
+    }
+</style>
+
+</html>

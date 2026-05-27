@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lista de Exercícios — Web App Mobile</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --white: #FFFFFF;
+    --gray-50: #F8F9FA;
+    --gray-100: #F1F3F5;
+    --gray-200: #E9ECEF;
+    --gray-400: #ADB5BD;
+    --gray-600: #6C757D;
+    --gray-800: #343A40;
+    --gray-900: #212529;
+    --accent: #0066FF;
+    --accent-light: #E8F0FE;
+    --green: #00C853;
+    --green-light: #E8F5E9;
+    --orange: #FF6D00;
+    --orange-light: #FFF3E0;
+    --purple: #7C3AED;
+    --purple-light: #F3E8FF;
+  }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: var(--gray-100);
+    color: var(--gray-900);
+    padding: 40px 20px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .page {
+    width: 800px;
+    max-width: 100%;
+  }
+
+  /* ── Header ── */
+  .header {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 6px 24px rgba(0,0,0,.04);
+    margin-bottom: 32px;
+    border-top: 4px solid;
+    border-image: linear-gradient(90deg, var(--accent), var(--green)) 1;
+  }
+
+  .header h1 {
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin-bottom: 6px;
+  }
+
+  .header h1 span { color: var(--accent); }
+
+  .header p {
+    font-size: 14px;
+    color: var(--gray-600);
+    line-height: 1.6;
+  }
+
+  .header .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 16px;
+    padding: 5px 14px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gray-600);
+    letter-spacing: .5px;
+  }
+
+  .header .tag .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+  }
+
+  /* ── Section ── */
+  .section {
+    margin-bottom: 36px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .section-badge {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--white);
+    flex-shrink: 0;
+    font-family: 'Roboto Mono', monospace;
+  }
+
+  .section-badge.blue { background: var(--accent); }
+  .section-badge.orange { background: var(--orange); }
+  .section-badge.purple { background: var(--purple); }
+
+  .section-title {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -.5px;
+  }
+
+  .section-sub {
+    font-size: 13px;
+    color: var(--gray-600);
+    margin-top: 1px;
+  }
+
+  /* ── Exercise Card ── */
+  .exercise {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.05), 0 4px 16px rgba(0,0,0,.03);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .exercise-number {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 24px 0;
+  }
+
+  .ex-num {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--white);
+    background: var(--gray-400);
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: .5px;
+  }
+
+  .ex-num.blue { background: var(--accent); }
+  .ex-num.orange { background: var(--orange); }
+  .ex-num.purple { background: var(--purple); }
+
+  .ex-difficulty {
+    font-size: 11px;
+    color: var(--gray-400);
+    font-weight: 500;
+    letter-spacing: .5px;
+  }
+
+  /* ── Hint ── */
+  .hint {
+    margin: 12px 24px 0;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--gray-800);
+    display: flex;
+    gap: 10px;
+  }
+
+  .hint.blue { background: var(--accent-light); border-left: 3px solid var(--accent); }
+  .hint.orange { background: var(--orange-light); border-left: 3px solid var(--orange); }
+  .hint.purple { background: var(--purple-light); border-left: 3px solid var(--purple); }
+
+  .hint-icon { flex-shrink: 0; font-size: 15px; }
+
+  .hint strong { font-weight: 600; }
+  .hint code {
+    background: rgba(0,0,0,.06);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
+  }
+
+  /* ── Question ── */
+  .question {
+    padding: 14px 24px 20px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--gray-800);
+  }
+
+  .question strong { color: var(--gray-900); }
+
+  .question code {
+    background: var(--gray-100);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+  }
+
+  .question ul {
+    margin-top: 6px;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .question li {
+    padding: 2px 0;
+  }
+
+  .question li::before {
+    content: "• ";
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* ── Divider ── */
+  .divider {
+    text-align: center;
+    padding: 24px 0 8px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-400);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.05), 0 4px 16px rgba(0,0,0,.03);
+    text-align: center;
+    margin-top: 12px;
+  }
+
+  .footer p {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.7;
+  }
+
+  .footer strong { color: var(--green); }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ════════════════════════════════════ -->
+<!-- HEADER                              -->
+<!-- ════════════════════════════════════ -->
+<div class="header">
+  <h1>Lista de <span>Exercícios</span></h1>
+  <p>HTML, CSS e JavaScript — do zero ao seu primeiro app<br>Pratique cada exercício no celular usando o Acode ou codepen.io</p>
+  <div class="tag"><span class="dot"></span> Curso Técnico — Programação para Dispositivos Móveis</div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- BLOCO 1 — HTML                      -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-badge blue">01</div>
+    <div>
+      <div class="section-title">HTML — Estrutura</div>
+      <div class="section-sub">Montar o esqueleto de páginas e apps</div>
+    </div>
+  </div>
+
+  <!-- EX 1 -->
+  <div class="exercise">
+    <div class="exercise-number">
+      <span class="ex-num blue">EX 01</span>
+      <span class="ex-difficulty">⭐ Fácil</span>
+    </div>
+    <div class="hint blue">
+      <span class="hint-icon">💡</span>
+      <div><strong>Lógica:</strong> Toda página precisa da estrutura base: <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code> (com <code>&lt;title&gt;</code>) e <code>&lt;body&gt;</code>. Dentro do body vão os elementos visíveis. Use <code>&lt;h1&gt;</code> para título e <code>&lt;p&gt;</code> para texto.</div>
+    </div>
+    <div class="question">
+      <strong>Cartão de visita simples</strong><br>
+      Crie uma página HTML com a estrutura completa contendo:
+      <ul>
+        <li>Título da página (aba do navegador): "Meu Cartão"</li>
+        <li>Seu nome completo em um <code>&lt;h1&gt;</code></li>
+        <li>Sua profissão/curso em um <code>&lt;h2&gt;</code></li>
+        <li>Seu e-mail em um <code>&lt;p&gt;</code></li>
+        <li>Seu telefone em outro <code>&lt;p&gt;</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EX 2 -->
+  <div class="exercise">
+    <div class="exercise-number">
+      <span class="ex-num blue">EX 02</span>
+      <span class="ex-difficulty">⭐ Fácil</span>
+    </div>
+    <div class="hint blue">
+      <span class="hint-icon">💡</span>
+      <div><strong>Lógica:</strong> Listas usam <code>&lt;ul&gt;</code> (não ordenada) ou <code>&lt;ol&gt;</code> (ordenada/numerada). Cada item vai dentro de um <code>&lt;li&gt;</code>. Para imagem use <code>&lt;img src="URL" width="200"&gt;</code> — a tag img não precisa fechar.</div>
+    </div>
+    <div class="question">
+      <strong>Página de receita</strong><br>
+      Crie uma página com uma receita culinária contendo:
+      <ul>
+        <li>Nome da receita em <code>&lt;h1&gt;</code></li>
+        <li>Uma imagem do prato (pode usar qualquer URL de imagem da internet)</li>
+        <li>Subtítulo "Ingredientes" em <code>&lt;h2&gt;</code> seguido de uma lista <strong>não ordenada</strong> (<code>&lt;ul&gt;</code>)</li>
+        <li>Subtítulo "Modo de Preparo" em <code>&lt;h2&gt;</code> seguido de uma lista <strong>ordenada</strong> (<code>&lt;ol&gt;</code>)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EX 3 -->
+  <div class="exercise">
+    <div class="exercise-number">
+      <span class="ex-num blue">EX 03</span>
+      <span class="ex-difficulty">⭐ Fácil</span>
+    </div>
+    <div class="hint blue">
+      <span class="hint-icon">💡</span>
+      <div><strong>Lógica:</strong> Links usam <code>&lt;a href="URL"&gt;texto&lt;/a&gt;</code>. Use <code>&lt;div&gt;</code> como caixa para agrupar elementos relacionados. Campos de formulário usam <code>&lt;input&gt;</code> com o atributo <code>type</code> (text, email, password) e <code>placeholder</code> para texto de dica.</div>
+    </div>
+    <div class="question">
+      <strong>Página de login</strong><br>
+      Crie uma tela de login com:
+      <ul>
+        <li>Um título <code>&lt;h1&gt;</code> escrito "Entrar"</li>
+        <li>Um <code>&lt;input type="email" placeholder="Seu e-mail"&gt;</code></li>
+        <li>Um <code>&lt;input type="password" placeholder="Sua senha"&gt;</code></li>
+        <li>Um <code>&lt;button&gt;</code> escrito "Entrar"</li>
+        <li>Um link <code>&lt;a&gt;</code> escrito "Esqueci minha senha"</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EX 4 -->
+  <div class="exercise">
+    <div class="exercise-number">
+      <span class="ex-num blue">EX 04</span>
+      <span class="ex-difficulty">⭐⭐ Médio</span>
+    </div>
+    <div class="hint blue">
+      <span class="hint-icon">💡</span>
+      <div><strong>Lógica:</strong> Tabelas usam <code>&lt;table&gt;</code>, com <code>&lt;tr&gt;</code> para cada linha, <code>&lt;th&gt;</code> para cabeçalho e <code>&lt;td&gt;</code> para dados. Pense na tabela como uma grade: cada <code>&lt;tr&gt;</code> é uma linha e cada <code>&lt;td&gt;</code> dentro dela é uma coluna.</div>
+    </div>
+    <div class="question">
+      <strong>Tabela de horários</strong><br>
+      Crie uma tabela com sua grade de horários da semana contendo:
+      <ul>
+        <li>Primeira linha com cabeçalhos: Horário, Segunda, Terça, Quarta, Quinta, Sexta</li>
+        <li>Pelo menos 3 linhas com matérias preenchidas</li>
+        <li>Coloque um <code>&lt;h1&gt;</code> acima da tabela escrito "Minha Grade"</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EX 5 -->
+  <div class="exercise">
+    <div class="exercise-number">
+      <span class="ex-num blue">EX 05</span>
+      <span class="ex-difficulty">⭐⭐ Médio</span>
+    </div>
+    <div class="hint blue">
+      <span class="hint-icon">💡</span>
+      <div><strong>Lógica:</strong> Use <code>&lt;div&gt;</code> para criar "caixas" que separam seções da página. <code>&lt;header&gt;</code> é a barra do topo, <code>&lt;main&gt;</code> é o conteúdo principal e <code>&lt;footer&gt;</code> é o rodapé. Essas tags semânticas funcionam como divs mas dizem <strong>o que</strong> cada parte é.</div>
+    </div>
+    <div class="question">
+      <strong>Página de produto</strong><br>
+      Crie uma página de loja virtual com:
+      <ul>
+        <li>Um <code>&lt;header&gt;</code> com o nome da loja em <code>&lt;h1&gt;</code></li>
+        <li>Um <code>&lt;main&gt;</code> com: imagem do produto, nome em <code>&lt;h2&gt;</code>, descrição em <code>&lt;p&gt;</code>, preço em <code>&lt;p&gt;</code> e botão "Comprar"</li>
+        <li>Um <code>&lt;footer&gt;</code> com texto "© 2026 Minha Loja"</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="divider">— — —</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- BLOCO 2 — CSS                       -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-badge orange">02</div>
+    <div>
+      <div class="section-title">CSS — Visual</div>
+      <div class="section-sub">Estilizar, posicionar e deixar bonito</div>
+    </div>
+  </div>
+
+  <!-- EX 6 -->
+  <div class="exercise">
+    <div class="exercise-number">
+      <span class="ex-num orange">EX 06</span>
+      <span class="ex-difficulty">⭐ Fácil</span>
+    </div>
+    <div class="hint orange">
+      <span class="hint-icon">💡</span>
+      <div><strong>Lógica:</strong> O CSS fica dentro de <code>&lt;style&gt;</code> no <code>&lt;head&gt;</code>. Para mudar a aparência de todos os <code>&lt;h1&gt;</code>, escreva <code>h1 { propriedade: valor; }</code>. Use <code>color</code> para cor do texto, <code>background</code> para fundo, <code>font-family</code> para tipo de fonte e <code>text-align: center</code> para centralizar.</div>
+    </div>
+    <div class="question">
+      <strong>Estilizando o cartão de visita</strong><br>
+      Pegue o HTML do Exercício 01 e adicione CSS para:
+      <ul>
+        <li>Fundo da página em <code>#1A1A2E</code> (azul escuro)</li>
+        <li>Textos todos em <code>white</code></li>
+        <li>Nome (h1) com tamanho <code>36px</code></li>
+        <li>Fonte da página toda: <code>Arial</code></li>
+        <li>Tudo centralizado com <code>text-align: center</code></li>
+        <li>Espaçamento interno da página: <code>padding: 40px</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EX 7 -->
+  <div class="exercise">
+    <div class="exercise-number">
+      <span class="ex-num orange">EX 07</span>
+      <span class="ex-difficulty">⭐ Fácil</span>
+    </div>
+    <div class="hint orange">
+      <span class="hint-icon">💡</span>
+      <div><strong>Lógica:</strong> Para estilizar um elemento específico, dê a ele um <code>id</code> no HTML e use <code>#id</code> no CSS. Para estilizar vários elementos iguais, use <code>class</code> no HTML e <code>.classe</code> no CSS. Exemplo: <code>&lt;p class="destaque"&gt;</code> → <code>.destaque { color: red; }</code></div>
+    </div>
+    <div class="question">
+      <strong>Cards coloridos</strong><br>
+      Crie 3 divs, cada uma representando um card, com:
+      <ul>
+        <li>Cada div com a classe <code>"card"</code></li>
+        <li>CSS do <code>.card</code>: fundo branco, <code>padding: 20px</code>, <code>margin: 10px</code>, <code>border-radius: 12px</code> e sombra com <code>box-shadow: 0 2px 8px rgba(0,0,0,0.1)</code></li>
+        <li>Cada card com um título (h3) e uma frase (p)</li>
+        <li>Dê um <code>id</code> diferente a cada card e mude a cor da borda esquerda com <code>border-left: 4px solid COR</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EX 8 -->
+  <div class="exercise">
+    <div class="exercise-number">
+      <span class="ex-num orange">EX 08</span>
+      <span class="ex-difficulty">⭐⭐ Médio</span>
+    </div>
+    <div class="hint orange">
+      <span class="hint-icon">💡</span>
+      <div><strong>Lógica:</strong> Para estilizar botões, combine <code>background</code>, <code>color</code>, <code>padding</code>, <code>border: none</code> e <code>border-radius</code>. Para efeito ao passar o dedo/mouse, use <code>button:hover { }</code> e mude a cor de fundo. Para transição suave, adicione <code>transition: 0.3s</code> no botão normal.</div>
+    </div>
+    <div class="question">
+      <strong>Galeria de botões</strong><br>
+      Crie uma página com 4 botões diferentes, cada um com estilo próprio:
+      <ul>
+        <li>Botão 1: fundo azul, texto branco, cantos arredondados</li>
+        <li>Botão 2: sem fundo (transparente), borda verde de 2px, texto verde</li>
+        <li>Botão 3: fundo vermelho, texto branco, totalmente redondo (<code>border-radius: 50px</code>)</li>
+        <li>Botão 4: fundo preto, texto amarelo, todo em maiúsculas (<code>text-transform: uppercase</code>)</li>
+        <li>Todos devem mudar levemente de cor no <code>:hover</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EX 9 -->
+  <div class="exercise">
+    <div class="exercise-number">
+      <span class="ex-num orange">EX 09</span>
+      <span class="ex-difficulty">⭐⭐ Médio</span>
+    </div>
+    <div class="hint orange">
+      <span class="hint-icon">💡</span>
+      <div><strong>Lógica:</strong> Para centralizar um bloco na tela, use <code>max-width: 400px</code> e <code>margin: 0 auto</code>. Para estilizar inputs, use <code>width: 100%</code>, <code>padding</code>, <code>border</code>, <code>border-radius</code> e <code>font-size</code>. Espaçamento entre elementos: <code>margin-bottom</code>.</div>
+    </div>
+    <div class="question">
+      <strong>Formulário bonito</strong><br>
+      Pegue o HTML do Exercício 03 (login) e estilize:
+      <ul>
+        <li>Centralize tudo com uma div de <code>max-width: 360px</code> e <code>margin: 60px auto</code></li>
+        <li>Inputs com largura total, <code>padding: 14px</code>, borda cinza clara e cantos arredondados</li>
+        <li>Espaço entre cada campo: <code>margin-bottom: 12px</code></li>
+        <li>Botão ocupando largura total com <code>width: 100%</code>, fundo azul e texto branco</li>
+        <li>Link "Esqueci minha senha" centralizado, cor cinza, sem sublinhado (<code>text-decoration: none</code>)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EX 10 -->
+  <div class="exercise">
+    <div class="exercise-number">
+      <span class="ex-num orange">EX 10</span>
+      <span class="ex-difficulty">⭐⭐ Médio</span>
+    </div>
+    <div class="hint orange">
+      <span class="hint-icon">💡</span>
+      <div><strong>Lógica:</strong> Para colocar elementos lado a lado, use <code>display: flex</code> no elemento pai. Use <code>gap</code> para espaçamento entre filhos, <code>flex-wrap: wrap</code> para quebrar linha quando não couber, e <code>justify-content: center</code> para centralizar. Cada filho pode ter <code>width: 200px</code> fixo.</div>
+    </div>
+    <div class="question">
+      <strong>Galeria de fotos com Flexbox</strong><br>
+      Crie uma galeria de imagens usando Flexbox:
+      <ul>
+        <li>Um <code>&lt;h1&gt;</code> escrito "Minha Galeria"</li>
+        <li>Uma div com <code>display: flex</code>, <code>flex-wrap: wrap</code> e <code>gap: 12px</code></li>
+        <li>Dentro, pelo menos 6 imagens (pode usar URLs de imagens da internet)</li>
+        <li>Cada imagem com <code>width: 180px</code>, <code>height: 180px</code>, <code>object-fit: cover</code> e <code>border-radius: 10px</code></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="divider">— — —</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- BLOCO 3 — JAVASCRIPT               -->
+<!-- ════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-badge purple">03</div>
+    <div>
+      <div class="section-title">JavaScript — Comportamento</div>
+      <div class="section-sub">Interatividade, lógica e manipulação da página</div>
+    </div>
+  </div>
+
+  <!-- EX 11 -->
+  <div class="exercise">
+    <div class="exercise-number">
+      <span class="ex-num purple">EX 11</span>
+      <span class="ex-difficulty">⭐ Fácil</span>
+    </div>
+    <div class="hint purple">
+      <span class="hint-icon">💡</span>
+      <div><strong>Lógica:</strong> Use <code>document.getElementById("id").innerText</code> para mudar o texto de um elemento. Crie uma função com <code>function nome() { }</code> e conecte ela ao botão com <code>onclick="nome()"</code>. Para pegar o valor digitado num input, use <code>.value</code>.</div>
+    </div>
+    <div class="question">
+      <strong>Saudação personalizada</strong><br>
+      Crie uma página com:
+      <ul>
+        <li>Um <code>&lt;input&gt;</code> com placeholder "Digite seu nome"</li>
+        <li>Um botão "Saudar"</li>
+        <li>Um <code>&lt;p id="saudacao"&gt;</code> vazio</li>
+        <li>Ao clicar no botão, o parágrafo deve mostrar: "Olá, [nome]! Bem-vindo(a)!"</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EX 12 -->
+  <div class="exercise">
+    <div class="exercise-number">
+      <span class="ex-num purple">EX 12</span>
+      <span class="ex-difficulty">⭐ Fácil</span>
+    </div>
+    <div class="hint purple">
+      <span class="hint-icon">💡</span>
+      <div><strong>Lógica:</strong> Para mudar cores com JS, use <code>elemento.style.background = "cor"</code>. Você pode mudar a cor do <code>document.body.style.background</code> diretamente. Crie uma função para cada cor ou uma função que receba a cor como parâmetro: <code>function trocar(cor) { }</code>.</div>
+    </div>
+    <div class="question">
+      <strong>Troca-cor</strong><br>
+      Crie uma página com:
+      <ul>
+        <li>Um título "Escolha uma cor"</li>
+        <li>3 botões: "Vermelho", "Azul", "Verde"</li>
+        <li>Ao clicar em cada botão, o fundo da página muda para a cor correspondente</li>
+        <li>Um 4° botão "Resetar" que volta o fundo para branco</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EX 13 -->
+  <div class="exercise">
+    <div class="exercise-number">
+      <span class="ex-num purple">EX 13</span>
+      <span class="ex-difficulty">⭐⭐ Médio</span>
+    </div>
+    <div class="hint purple">
+      <span class="hint-icon">💡</span>
+      <div><strong>Lógica:</strong> Para mostrar/esconder um elemento, use <code>elemento.style.display = "none"</code> (esconder) e <code>elemento.style.display = "block"</code> (mostrar). Você pode usar uma variável <code>let visivel = true</code> e alternar com <code>if/else</code> a cada clique.</div>
+    </div>
+    <div class="question">
+      <strong>Acordeão de perguntas (FAQ)</strong><br>
+      Crie um mini FAQ com:
+      <ul>
+        <li>3 perguntas, cada uma em um <code>&lt;h3&gt;</code> com <code>onclick</code></li>
+        <li>Cada resposta em um <code>&lt;p&gt;</code> que começa escondido (<code>style="display: none"</code>)</li>
+        <li>Ao clicar na pergunta, a resposta aparece; clicar de novo, esconde</li>
+        <li>Estilize com CSS: fundo cinza claro em cada bloco, cantos arredondados</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EX 14 -->
+  <div class="exercise">
+    <div class="exercise-number">
+      <span class="ex-num purple">EX 14</span>
+      <span class="ex-difficulty">⭐⭐ Médio</span>
+    </div>
+    <div class="hint purple">
+      <span class="hint-icon">💡</span>
+      <div><strong>Lógica:</strong> Use um array (lista) para guardar itens: <code>let lista = []</code>. Adicione com <code>lista.push(item)</code>. Para mostrar a lista na tela, use <code>innerHTML</code> e monte o HTML com um loop <code>for</code> ou <code>lista.map()</code>. Cada item vira um <code>&lt;li&gt;</code> dentro de um <code>&lt;ul&gt;</code>.</div>
+    </div>
+    <div class="question">
+      <strong>Lista de tarefas (To-Do)</strong><br>
+      Crie um app de tarefas com:
+      <ul>
+        <li>Um <code>&lt;input&gt;</code> para digitar a tarefa</li>
+        <li>Um botão "Adicionar"</li>
+        <li>Uma <code>&lt;ul id="tarefas"&gt;</code> onde as tarefas aparecem</li>
+        <li>Cada tarefa adicionada aparece como um novo <code>&lt;li&gt;</code> na lista</li>
+        <li>Se o input estiver vazio, mostre um <code>alert("Digite uma tarefa!")</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EX 15 -->
+  <div class="exercise">
+    <div class="exercise-number">
+      <span class="ex-num purple">EX 15</span>
+      <span class="ex-difficulty">⭐⭐ Médio</span>
+    </div>
+    <div class="hint purple">
+      <span class="hint-icon">💡</span>
+      <div><strong>Lógica:</strong> Use <code>Math.random()</code> para gerar um número aleatório entre 0 e 1. Para um número de 1 a 10: <code>Math.floor(Math.random() * 10) + 1</code>. Use <code>if/else</code> para comparar o palpite do usuário com o número sorteado e dê feedback diferente para acertou, errou pra cima ou errou pra baixo.</div>
+    </div>
+    <div class="question">
+      <strong>Jogo de adivinhação</strong><br>
+      Crie um jogo onde o usuário tenta adivinhar um número:
+      <ul>
+        <li>Ao carregar a página, sorteie um número de 1 a 10</li>
+        <li>Um <code>&lt;input type="number"&gt;</code> para o palpite</li>
+        <li>Um botão "Tentar"</li>
+        <li>Um <code>&lt;p&gt;</code> que mostra: "Muito alto!", "Muito baixo!" ou "Acertou! 🎉"</li>
+        <li>Um contador de tentativas que mostra quantas vezes o jogador tentou</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EX 16 -->
+  <div class="exercise">
+    <div class="exercise-number">
+      <span class="ex-num purple">EX 16</span>
+      <span class="ex-difficulty">⭐⭐ Médio</span>
+    </div>
+    <div class="hint purple">
+      <span class="hint-icon">💡</span>
+      <div><strong>Lógica:</strong> Use <code>setInterval(funcao, 1000)</code> para executar algo a cada 1 segundo (1000 ms). Guarde os segundos numa variável e incremente. Para formatar em mm:ss, use <code>Math.floor(seg / 60)</code> para minutos e <code>seg % 60</code> para segundos. Use <code>clearInterval(id)</code> para parar.</div>
+    </div>
+    <div class="question">
+      <strong>Cronômetro</strong><br>
+      Crie um cronômetro com:
+      <ul>
+        <li>Um <code>&lt;h1&gt;</code> mostrando "00:00"</li>
+        <li>Botão "Iniciar" — começa a contar os segundos</li>
+        <li>Botão "Parar" — pausa o cronômetro</li>
+        <li>Botão "Zerar" — volta para 00:00</li>
+        <li>Estilize com CSS: números grandes, botões coloridos</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EX 17 -->
+  <div class="exercise">
+    <div class="exercise-number">
+      <span class="ex-num purple">EX 17</span>
+      <span class="ex-difficulty">⭐⭐ Médio</span>
+    </div>
+    <div class="hint purple">
+      <span class="hint-icon">💡</span>
+      <div><strong>Lógica:</strong> Para a calculadora de IMC: <code>IMC = peso / (altura * altura)</code>. Use <code>.toFixed(1)</code> para mostrar só 1 casa decimal. Use <code>if/else if</code> para classificar: abaixo de 18.5, entre 18.5-24.9, entre 25-29.9, acima de 30. Mude a cor do resultado conforme a faixa.</div>
+    </div>
+    <div class="question">
+      <strong>Calculadora de IMC</strong><br>
+      Crie uma calculadora de Índice de Massa Corporal:
+      <ul>
+        <li>Input para peso (kg) e input para altura (m)</li>
+        <li>Botão "Calcular"</li>
+        <li>Exiba o resultado com a classificação: Abaixo do peso, Normal, Sobrepeso ou Obesidade</li>
+        <li>Mude a cor do texto do resultado: verde para Normal, amarelo para Sobrepeso, vermelho para Obesidade</li>
+        <li>Estilize todo o formulário com CSS bonito</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EX 18 -->
+  <div class="exercise">
+    <div class="exercise-number">
+      <span class="ex-num purple">EX 18</span>
+      <span class="ex-difficulty">⭐⭐⭐ Desafio</span>
+    </div>
+    <div class="hint purple">
+      <span class="hint-icon">💡</span>
+      <div><strong>Lógica:</strong> Combine <strong>tudo</strong> que aprendeu. Use um array para guardar as tarefas, <code>localStorage.setItem("chave", JSON.stringify(array))</code> para salvar a lista inteira e <code>JSON.parse(localStorage.getItem("chave"))</code> para recuperar. Para remover, use <code>array.splice(indice, 1)</code> e re-renderize a lista.</div>
+    </div>
+    <div class="question">
+      <strong>App de tarefas completo (com localStorage)</strong><br>
+      Evolua o Exercício 14 para um app completo:
+      <ul>
+        <li>Adicionar tarefas com input + botão</li>
+        <li>Cada tarefa tem um botão "✕" que a remove</li>
+        <li>As tarefas são <strong>salvas no localStorage</strong> — ao fechar e abrir o navegador, elas continuam lá</li>
+        <li>Estilize como um app real: fundo claro, cards com sombra, botões bonitos</li>
+        <li>Mostre um contador: "3 tarefas pendentes"</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EX 19 -->
+  <div class="exercise">
+    <div class="exercise-number">
+      <span class="ex-num purple">EX 19</span>
+      <span class="ex-difficulty">⭐⭐⭐ Desafio</span>
+    </div>
+    <div class="hint purple">
+      <span class="hint-icon">💡</span>
+      <div><strong>Lógica:</strong> Use <code>async function</code> e <code>await fetch(url)</code> para buscar dados. A API ViaCEP é gratuita: <code>https://viacep.com.br/ws/CEP/json/</code>. Substitua CEP pelo valor digitado. A resposta JSON terá campos como <code>logradouro</code>, <code>bairro</code>, <code>localidade</code>, <code>uf</code>. Trate erros com <code>if (!resposta.ok)</code>.</div>
+    </div>
+    <div class="question">
+      <strong>Buscador de CEP</strong><br>
+      Crie um app que consulta endereços:
+      <ul>
+        <li>Um input para digitar o CEP (só números)</li>
+        <li>Um botão "Buscar"</li>
+        <li>Ao clicar, busque o endereço na API ViaCEP</li>
+        <li>Exiba: rua, bairro, cidade e estado em parágrafos separados</li>
+        <li>Se o CEP não existir, mostre "CEP não encontrado" em vermelho</li>
+        <li>Estilize como um app com CSS</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EX 20 -->
+  <div class="exercise">
+    <div class="exercise-number">
+      <span class="ex-num purple">EX 20</span>
+      <span class="ex-difficulty">⭐⭐⭐ Desafio</span>
+    </div>
+    <div class="hint purple">
+      <span class="hint-icon">💡</span>
+      <div><strong>Lógica:</strong> Este exercício junta HTML + CSS + JS + localStorage + API. Monte a estrutura HTML, estilize com CSS como se fosse um app real (dark mode ou light mode, sua escolha), use JS para a lógica e localStorage para persistir os dados. Pense em cada parte separadamente e depois conecte tudo.</div>
+    </div>
+    <div class="question">
+      <strong>🏆 Projeto Final — Mini App de clima</strong><br>
+      Crie um app completo de previsão do tempo:
+      <ul>
+        <li>Input para digitar o nome de uma cidade</li>
+        <li>Botão "Buscar clima"</li>
+        <li>Use a API gratuita: <code>https://wttr.in/CIDADE?format=j1</code></li>
+        <li>Exiba: temperatura atual, sensação térmica e descrição do tempo</li>
+        <li>Salve a última cidade pesquisada no localStorage e carregue automaticamente ao abrir</li>
+        <li>Estilize como um app real com ícones (use emojis: ☀️🌧️⛅), cores e cantos arredondados</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!-- FOOTER                              -->
+<!-- ════════════════════════════════════ -->
+<div class="footer">
+  <p>
+    <strong>🚀 Dica final:</strong> Comece sempre pelo HTML (estrutura), depois CSS (visual) e por último JS (comportamento).<br>
+    Teste cada pequena mudança antes de seguir — assim você sabe exatamente o que deu certo e o que deu errado.<br>
+    Use o <strong>Acode</strong> no celular ou <strong>codepen.io</strong> no navegador. Boa prática!
+  </p>
+</div>
+
+</div>
+</body>
+</html>

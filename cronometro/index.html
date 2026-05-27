@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cronômetro</title>
+  </head>
+
+  <body>
+    <h1 id="cronometro">00:00</h1>
+    <button class="iniciar" onclick="iniciar()">Iniciar</button>
+    <button class="parar" onclick="parar()">Parar</button>
+    <button class="zerar" onclick="zerar()">Zerar</button>
+
+    <script>
+      let segundos = 0;
+      let intervalo = null;
+
+      function atualizar_cronometro() {
+        let minutos = Math.floor(segundos / 60);
+        let seg = segundos % 60;
+
+        minutos = String(minutos).padStart(2, "0");
+        seg = String(seg).padStart(2, "0");
+
+        document.getElementById("cronometro").innerText = `${minutos}:${seg}`;
+
+        segundos++;
+      }
+
+      function iniciar() {
+        if (intervalo === null) {
+          intervalo = setInterval(atualizar_cronometro, 1000);
+        }
+      }
+
+      function parar() {
+        clearInterval(intervalo);
+        intervalo = null;
+      }
+
+      function zerar() {
+        parar();
+        segundos = 0;
+        document.getElementById("cronometro").innerText = "00:00";
+      }
+    </script>
+
+    <style>
+      body {
+        align-items: center;
+        text-align: center;
+      }
+      h1 {
+        font-family: arial;
+        font-size: 100px;
+      }
+      button {
+        padding: 30px;
+        font-size: 30px;
+        margin-right: 20px;
+      }
+      .iniciar {
+        color: green;
+        background-color: transparent;
+        box-shadow: 2px 2px 0px 0px green;
+      }
+      .parar {
+        color: red;
+        background-color: transparent;
+        box-shadow: 2px 2px 0px 0px red;
+      }
+      .zerar {
+        color: blue;
+        background-color: transparent;
+        box-shadow: 2px 2px 0px 0px blue;
+      }
+    </style>
+  </body>
+</html>
