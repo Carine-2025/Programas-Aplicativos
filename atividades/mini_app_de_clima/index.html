@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mini App de Clima</title>
+
+    <style>
+        * {
+            margin: 0;
+            /*remove as margens padrão de todos os elementos*/
+            padding: 0;
+            /*remove os espaçamentos internos padrão*/
+            box-sizing: border-box;
+            /*altera a forma como largura e algura são calculadas.
+            Com esta atribuição os elementos incluirão padding e
+            margin no tamanho total definido para o elemento:
+            Exemplo sem box-sizing: border-box;
+            200px (conteúdo)
+            + 40px (padding esquerdo + direito)
+            + 10px (borda esquerda + direita)
+            = 250px
+            Exemplo com box-sizing: border-box;
+            200px (largura total da caixa)
+            ├─ conteúdo
+            ├─ padding
+            └─ borda*/
+        }
+
+        body {
+            margin: 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        header {
+            background-color: green;
+            color: rgb(236, 236, 236);
+            display: flex;
+            justify-content: space-between;
+            height: 150px;
+            width: 100%;
+        }
+
+        h1 {
+            margin: 60px;
+        }
+
+        form {
+            margin-top: 60px;
+            margin-right: 60px;
+        }
+
+        input {
+            width: 280px;
+            height: 40px;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 20px;
+            border: none;
+            margin-right: 20px;
+        }
+
+        input:hover {
+            transform: scale(1.03);
+            border: none;
+        }
+
+        button {
+            padding: 6px 10px;
+            background-color: rgb(181, 212, 181);
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background-color: rgb(236, 236, 236);
+            color: green;
+            transform: scale(1.03);
+        }
+
+        section {
+            margin: 150px 0 150px 0;
+            background-color: rgb(252, 250, 245);
+            height: 500px;
+            width: 800px;
+        }
+
+        footer {
+            display: flex;
+            flex-direction: column;
+            background-color: rgb(208, 235, 208);
+            width: 100%;
+            height: 150px;
+        }
+
+        .texto-footer {
+            margin: 20px 60px;
+            color: rgb(3, 68, 3);
+        }
+    </style>
+</head>
+
+<!--id: identificador único para um elemento específico. O que for
+atribuído ao id será aplicado exclusivamente a um elemento.
+
+class: identificar para um conjunto de elementos. O que for
+atribuído a uma class será aplicado a todos os elementos que
+compõem essa classe.
+
+tag: especifica o tipo do elemento. O que for atribuído a uma tag
+será aplicado a todos os elementos que usam a mesma tag em toda a
+página.-->
+
+<body>
+    <header>
+        <h1>O Clima</h1>
+
+        <form>
+            <input id="cidade" name="cidade" type="text" placeholder="Digite o nome da cidade" />
+            <button type="button" id="buscaClima" onclick="buscarClima()">
+                Buscar clima
+            </button>
+        </form>
+    </header>
+
+    <main>
+        <section>
+            <h2 id="nomeCidade"></h2>
+            <time id="data-atual"></time>
+
+            <div id="dados-clima"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="texto-footer">
+            <p>Atividade:</p>
+            <p>Mini App de Clima</p>
+            <p>Aula de Programas Aplicativos</p>
+        </div>
+    </footer>
+
+    <script>
+        async function buscarClima() {
+            
+
+            let cidadeElement = document.getElementById("cidade");
+            let cidade = cidadeElement.value.trim();
+            let climaElement = document.getElementById("dados-clima");
+
+            climaElement.innerHTML = "";
+
+            const url = `https://wttr.in/${cidade}?format=j1`;
+
+            try {
+                const resposta = await fetch(url);
+
+                if (!resposta.ok) {
+                    mostrarErro(climaElement);
+                    return;
+                }
+
+                const dados = await resposta.json();
+
+                
+
+                const clima = dados.current_condition[0];
+
+                climaElement.innerHTML = `
+                      <strong>Temperatura:</strong> ${clima.temp_C} ºC<br>
+                      <strong>Sensação térmica:</strong> ${clima.FeelsLikeC} ºC<br>
+                      <strong>Condição do tempo:</strong> ${clima.weatherDesc[0].value}<br>
+                    `;
+
+                document.getElementById("cidade").value = "";
+                document.getElementById("nomeCidade").textContent = cidade;
+
+
+            } catch (erro) {
+                console.erros(erro);
+                mostrarErro(climaElement);
+            }
+
+            return;
+        }
+
+
+        function mostrarErro(elemento) {
+            elemento.textContent = "Cidade não encontrada";
+            elemento.style.color = "red";
+        }
+    </script>
+</body>
+
+</html>
