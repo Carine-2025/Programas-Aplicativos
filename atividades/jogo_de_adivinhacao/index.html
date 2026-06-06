@@ -28,7 +28,7 @@
         contador++;
 
       if (novo_palpite === num_sorteado){
-          document.getElementById("feedback").innerText = "Acertou!"
+          document.getElementById("feedback").innerText = "Acertou! \u{1F389}"
       }else if (novo_palpite > num_sorteado){
           document.getElementById("feedback").innerText = "Muito alto!"
       }else {
@@ -36,8 +36,10 @@
       }
 
       document.getElementById("tentativas").innerText = "Tentativas: " + contador;
+      document.getElementById("palpite").value = "";
 
     }
+
     </script>
   </body>
 </html>

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App de Tarefas</title>
+
+    <style>
+        header {
+            display: flex;
+            justify-content: center;
+            background-color: purple;
+            color: white;
+            margin-bottom: 60px;
+            height: 100px;
+            text-align: center;
+            font-family: 'Trebuchet MS', sans-serif
+        }
+
+        h1 {
+            margin-top: 35px;
+        }
+
+        div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        input {
+            width: 500px;
+            height: 45px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 40px;
+            color: gray;
+            font-size: 25px;
+            border-color: purple;
+            text-align: center;
+            color: rgb(190, 124, 190);
+        }
+
+        button {
+            background-color: purple;
+            color: white;
+            padding: 10px;
+            font-size: 20px;
+            border-radius: 30px;
+            border-color: rgb(190, 124, 190);
+        }
+
+        ol {
+            color: purple;
+            font-size: 25px;
+        }
+
+        li {
+            margin-bottom: 20px;
+            font-size: 25px;
+            list-style-position: inside;
+        }
+
+        .remover {
+            width: 30px;
+            height: 30px;
+            padding:5px;
+            font-size: 15px;
+        }
+
+        h2 {
+            color: purple;
+            font-family: 'Trebuchet MS', sans-serif
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Gerenciador de Tarefas</h1>
+    </header>
+    <div>
+        <input id="tarefa" type="text" placeholder="Digite sua tarefa" />
+        <button onclick="adicionar()">Adicionar</button>
+        <ol id="tarefas"></ol>
+        <h2 id="contador">0 tarefas pendentes</h2>
+    </div>
+
+    <script>
+
+        let lista = JSON.parse(localStorage.getItem("minhas_tarefas")) || [];
+
+        function adicionar() {
+
+            const nova_tarefa =
+                document.getElementById("tarefa").value;
+
+            if (nova_tarefa.trim() == "") {
+
+                alert("Digite uma tarefa!");
+
+                return;
+            }
+
+            lista.push(nova_tarefa);
+
+            localStorage.setItem("minhas_tarefas", JSON.stringify(lista));
+
+            mostrarTarefas();
+
+            document.getElementById("tarefa").value = "";
+
+        }
+
+        function mostrarTarefas() {
+            
+            let html = "";
+
+            for (let i = 0; i < lista.length; i++) {
+
+                html += "<li>" + lista[i] + "<span>" + "  <button class='remover' onclick='remover("+ i +")'>X</button>" + "</span>" + "</li>";
+
+            }
+
+            document.getElementById("tarefas").innerHTML = html;
+
+            atualizarContador();
+
+        }
+        
+        function remover(id){
+           lista.splice(id, 1);
+           localStorage.setItem("minhas_tarefas", JSON.stringify(lista));
+           mostrarTarefas();
+        }
+
+        function atualizarContador(){
+            const total = lista.length;
+            const elementoContador = document.getElementById("contador");
+
+            if (total ===1) {
+                elementoContador.innerText = "1 tarefa pendente";
+            } else {
+                elementoContador.innerText = total + "  tarefas pendentes";
+            }
+        }
+
+        mostrarTarefas();
+
+    </script>
+</body>
+
+</html>

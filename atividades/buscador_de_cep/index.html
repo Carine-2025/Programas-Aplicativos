@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale= 1.0;">
+    <title>Buscador de CEP</title>
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+        }
+        h1 {
+            margin-top: 100px;
+            font-size: 50px;
+            color: rgb(4, 56, 116);
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 6px solid rgb(4, 56, 116);
+            border-radius: 20px;
+            width: 600px;
+            height: 400px;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 20px;
+            margin-top: 40px;
+            width: 250px;
+            height: 30px;
+            border: 4px solid rgb(245, 149, 6);
+            border-radius: 12px;   
+            font-size: 16px;
+            color: rgb(30, 79, 134)
+        }
+
+        button {
+            padding: 5px;
+            width: 90px;
+            border-radius: 30px;
+            border: none;
+            margin-bottom: 40px;
+            background-color: rgb(4, 56, 116);
+            color: white;
+            font-size: 20px;
+        }
+
+        p {
+            color: rgb(245, 149, 6);
+            font-size: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="pagina">
+        <h1>Buscador de CEP</h1>
+    <div class="container">
+    <input id="cep" class="cep" type="text" placeholder="Digite seu CEP" maxlength="8">
+    <button id="buscar" class="buscar" onclick="buscar()">Buscar</button>
+    <p id="endereco" class="endereco"></p>
+    </div>
+    </div>
+</body>
+
+<script>
+
+    async function buscar() {
+        let cepElement = document.getElementById("cep");
+        let cep = cepElement.value.trim();
+        let enderecoElement = document.getElementById("endereco");
+
+        enderecoElement.innerHTML = "";
+
+        if (cep.length !== 8) {
+            alert("CEP inválido!");
+            return;
+        }
+
+        const url = `https://viacep.com.br/ws/${cep}/json/`;
+
+        try {
+            const resposta = await fetch(url);
+
+            if (!resposta.ok) {
+                mostrarErro(enderecoElement);
+                return;
+            }
+
+            const dados = await resposta.json();
+
+            if (dados.erro) {
+                mostrarErro(endercoElement);
+            } else {
+                enderecoElement.innerHTML = `
+                <strong style="color: rgb(4, 56, 116)">Rua:</strong> ${dados.logradouro || 'Não informada'}<br>
+                <strong style="color: rgb(4, 56, 116)">Bairro:</strong> ${dados.bairro || 'Não informado'}<br>
+                <strong style="color: rgb(4, 56, 116)">Cidade:</strong> ${dados.localidade}<br>
+                <strong style="color: rgb(4, 56, 116)">Estado:</strong> ${dados.uf}
+            `;
+                document.getElementById("cep").value = "";
+
+            }
+        } catch (erro) {
+            mostrarErro(endercoElement);
+        }
+
+    }
+
+    function mostrarErro(elemento) {
+        elemento.textContent = "CEP não encontrado";
+        elemento.style.color = "red";
+    }
+
+</script>
+
+</html>

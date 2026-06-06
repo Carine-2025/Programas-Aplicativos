@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de CEP</title>
+</head>
+
+<body>
+    <!-- 1. Adicionado o id="cep" para o JavaScript conseguir encontrar o input -->
+    <!-- 2. Mudado para type="text" com maxlength para controlar melhor os 8 dígitos -->
+    <input id="cep" class="cep" type="text" placeholder="CEP" maxlength="8">
+    <button class="buscar" onclick="buscar()">Buscar</button>
+    
+    <!-- 3. Adicionado o id="endereco" para o JavaScript encontrar o parágrafo -->
+    <p id="endereco" class="endereco"></p>
+</body>
+
+<script>
+    // A captura do valor deve ser feita DENTRO da função buscar, 
+    // para pegar o que o usuário digitou no momento do clique.
+    async function buscar() {
+        let cepElement = document.getElementById("cep");
+        let cep = cepElement.value.trim();
+        let enderecoElement = document.getElementById("endereco");
+
+        // Limpa o resultado anterior antes de uma nova busca
+        enderecoElement.innerHTML = "";
+        enderecoElement.style.color = "black";
+
+        // Validação correta: verifica se o CEP tem exatamente 8 caracteres
+        if (cep.length !== 8) {
+            alert("CEP inválido! Digite exatamente 8 números.");
+            return;
+        }
+
+        // URL correta usando Crases (``) para poder injetar a variável ${cep}
+        const url = `https://viacep.com.br{cep}/json/`;
+
+        try {
+            // Executa o fetch e aguarda a resposta
+            const resposta = await fetch(url);
+
+            // Trata erro de conexão ou resposta inválida do servidor
+            if (!resposta.ok) {
+                mostrarErro(enderecoElement);
+                return;
+            }
+
+            const dados = await resposta.json();
+
+            // A API ViaCEP retorna "erro: true" se o CEP não existir no banco de dados deles
+            if (dados.erro) {
+                mostrarErro(enderecoElement);
+            } else {
+                // Insere as informações em parágrafos separados conforme o requisito
+                enderecoElement.innerHTML = `
+                    <strong>Rua:</strong> ${dados.logradouro || 'Não informada'}<br>
+                    <strong>Bairro:</strong> ${dados.bairro || 'Não informado'}<br>
+                    <strong>Cidade:</strong> ${dados.localidade}<br>
+                    <strong>Estado:</strong> ${dados.uf}
+                `;
+            }
+
+        } catch (erro) {
+            mostrarErro(enderecoElement);
+        }
+    }
+
+    // Função auxiliar para reaproveitar a mensagem de erro em vermelho
+    function mostrarErro(elemento) {
+        elemento.textContent = "CEP não encontrado";
+        elemento.style.color = "red";
+    }
+</script>
+</html>
